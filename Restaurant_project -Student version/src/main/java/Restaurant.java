@@ -65,6 +65,14 @@ public class Restaurant {
     }
 
     public int calculateOrderValue(List<String> items) throws ItemNotFoundException {
-        return 0;
+        int price = 0;
+        for(String item : items) {
+            Item itemToBeSearched = findItemByName(item);
+            if(Objects.isNull(itemToBeSearched)) {
+                throw new ItemNotFoundException("The item " + item + " is not found");
+            }
+            price = price + itemToBeSearched.getPrice();
+        }
+        return price;
     }
 }

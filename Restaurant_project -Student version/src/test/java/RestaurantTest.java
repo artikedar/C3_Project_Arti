@@ -74,4 +74,12 @@ class RestaurantTest {
         assertEquals(119, restaurant.calculateOrderValue(order));
     }
 
+    @Test
+    public void test_calculate_order_value_for_item_not_found() {
+        List<String> order = new ArrayList<>();
+        order.add("Pizza");
+        assertThrows(ItemNotFoundException.class,
+                ()->restaurant.calculateOrderValue(order));
+    }
+
 }
