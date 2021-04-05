@@ -1,8 +1,8 @@
 import java.time.Clock;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Restaurant {
     private String name;
@@ -20,10 +20,10 @@ public class Restaurant {
     }
 
     public boolean isRestaurantOpen() {
-        return LocalTime.now(clock).isAfter(openingTime) && LocalTime.now(clock).isBefore(closingTime) ? Boolean.TRUE : Boolean.FALSE;
+        return getCurrentTime(clock).isAfter(openingTime) && getCurrentTime(clock).isBefore(closingTime) ? Boolean.TRUE : Boolean.FALSE;
     }
 
-    public LocalTime getCurrentTime(){ return  LocalTime.now(); }
+    public LocalTime getCurrentTime(Clock clock){ return  LocalTime.now(clock); }
 
     public List<Item> getMenu() {
         return menu;
@@ -31,8 +31,9 @@ public class Restaurant {
 
     private Item findItemByName(String itemName){
         for(Item item: menu) {
-            if(item.getName().equals(itemName))
+            if(item.getName().equals(itemName)) {
                 return item;
+            }
         }
         return null;
     }
@@ -42,11 +43,11 @@ public class Restaurant {
         menu.add(newItem);
     }
 
-    public void removeFromMenu(String itemName) throws itemNotFoundException {
+    public void removeFromMenu(String itemName) throws ItemNotFoundException {
 
         Item itemToBeRemoved = findItemByName(itemName);
         if (itemToBeRemoved == null)
-            throw new itemNotFoundException(itemName);
+            throw new ItemNotFoundException(itemName);
 
         menu.remove(itemToBeRemoved);
     }
@@ -63,4 +64,7 @@ public class Restaurant {
         return name;
     }
 
+    public int calculateOrderValue(List<String> items) throws ItemNotFoundException {
+        return 0;
+    }
 }

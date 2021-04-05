@@ -8,6 +8,8 @@ import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -54,14 +56,22 @@ class RestaurantTest {
         assertEquals(initialMenuSize+1,restaurant.getMenu().size());
     }
     @Test
-    public void removing_item_from_menu_should_decrease_menu_size_by_1() throws itemNotFoundException {
+    public void removing_item_from_menu_should_decrease_menu_size_by_1() throws ItemNotFoundException {
         int initialMenuSize = restaurant.getMenu().size();
         restaurant.removeFromMenu("Vegetable lasagne");
         assertEquals(initialMenuSize-1,restaurant.getMenu().size());
     }
     @Test
     public void removing_item_that_does_not_exist_should_throw_exception() {
-        assertThrows(itemNotFoundException.class,
+        assertThrows(ItemNotFoundException.class,
                 ()->restaurant.removeFromMenu("French fries"));
     }
+
+    @Test
+    public void test_calculate_order_value() throws ItemNotFoundException {
+        List<String> order = new ArrayList<>();
+        order.add("Sweet corn soup");
+        assertEquals(119, restaurant.calculateOrderValue(order));
+    }
+
 }
